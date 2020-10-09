@@ -6,18 +6,6 @@ from lists.views import home_page
 
 class HomePageTest(TestCase):
 
-    def test_root_url_resolves_to_home_page_view(self):
-        found = resolve("/")
-        self.assertEqual(found.func, home_page)
-
-    def test_home_page_returns_correct_html(self):
-        response = self.client.get("/")
-        html = response.content.decode("utf8")
-
-        self.assertTrue(html.startswith("<html>"))
-        self.assertIn("<title>To-Do lists</title>", html)
-        self.assertTrue(html.strip().endswith("</html>"))
-
     def test_uses_home_template(self):
         response = self.client.get("/")
         self.assertTemplateUsed(response, "home.html")
@@ -36,14 +24,6 @@ class HomePageTest(TestCase):
     def test_only_saves_items_when_necessary(self):
         self.client.get("/")
         self.assertEqual(Item.objects.count(), 0)
-
-    def test_displays_all_list_items(self):
-        Item.objects.create(text="Item 1")
-        Item.objects.create(text="Item 2")
-
-        response = self.client.get("/")
-        self.assertIn("1: Item 1", response.content.decode())
-        self.assertIn("2: Item 2", response.content.decode())
 
 
 class ItemModelTest(TestCase):
@@ -68,6 +48,11 @@ class ItemModelTest(TestCase):
 
 
 class ListViewTest(TestCase):
+
+    def test_uses_list_template(self):
+        response = self.client.get('/lists/the-only-list-in-the-world/')
+        self.assertTemplateUsed(response, 'list.html')
+
     def test_displays_all_list_items(self):
         Item.objects.create(text="Item 1")
         Item.objects.create(text="Item 2")
