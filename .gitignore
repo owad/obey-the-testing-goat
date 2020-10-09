@@ -2,4 +2,4 @@ db.sqlite3
 geckodriver.log
 venv
 __pycache__
-
+/static
