@@ -26,6 +26,8 @@ SECRET_KEY = "_9ovh0x$5a+v19e6myb5%h&e1#+l8*24iju+g)&)dcn1$52p$w"
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
     "owad.pythonanywhere.com",
 ]
 
